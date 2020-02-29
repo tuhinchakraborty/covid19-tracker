@@ -14,14 +14,27 @@ class Controller(
     @GetMapping("/")
     fun home(model: Model): String {
         val fetchedData = dataService.fetchData()
-        val totalNumberOfCases = fetchedData.map { data ->
+        val totalCases = fetchedData.map { data ->
             data.sumBy {
                 it.currentCount
             }
         }
 
+        val previousCases = fetchedData.map { data ->
+            data.sumBy {
+                it.previousCount
+            }
+        }
+
+        val totalNewCases = totalCases
+                .zipWith(previousCases)
+                .map {
+                    it.t1 - it.t2
+                }
+
         model.addAttribute("data", fetchedData)
-        model.addAttribute("totalCases", totalNumberOfCases)
+        model.addAttribute("totalCases", totalCases)
+        model.addAttribute("totalNewCases", totalNewCases)
         return "home"
     }
 }

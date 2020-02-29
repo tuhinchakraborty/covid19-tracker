@@ -13,8 +13,11 @@
     <body>
     <h1>COVID-19 Tracker</h1>
     <div class="jumbotron">
-        <p class="lead">Total Number of Reported Cases as of Today.</p>
+        <h3 class="lead">Total Number of Reported Cases as of Today - Worldwide</h3>
         <h1 class="display-4" th:text="${totalCases}"></h1>
+        <hr class="my-4">
+        <h6 class="lead">Total Number of New Reported Cases - Worldwide</h6>
+        <h4 class="display-4" th:text="${totalNewCases}"></h4>
     </div>
 
     <div>
@@ -23,11 +26,13 @@
                 <th>COUNTRY</th>
                 <th>PROVINCE/STATE</th>
                 <th>CURRENT NUMBER OF CASES</th>
+                <th>Rise/Fall</th>
             </tr>
             <tr th:each="prod : ${data}">
                 <td th:text="${prod.country}">NA</td>
                 <td th:text="${prod.province}">NA</td>
                 <td th:text="${prod.currentCount}">NA</td>
+                <td th:text="${prod.getDifference()}">NA</td>
             </tr>
         </table>
     </div>

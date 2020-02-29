@@ -21,15 +21,17 @@ class DataService(@Autowired appConfig: AppConfig) {
     @PostConstruct
     @Scheduled(cron = "* * * * * *")
     fun fetchData(): Mono<List<Data>> {
-        val webClient = WebClient.create(dataUrl)
-        val clientResponseMono = webClient
+        val clientResponseMono = WebClient
+                .create(dataUrl)
                 .get()
                 .exchange()
 
         return clientResponseMono.flatMap {
             it.toEntity(String::class.java)
-        }.map {
-            parseCSV(it)
+        }.map { responseEntity ->
+            parseCSV(responseEntity).sortedByDescending {
+                it.currentCount
+            }
         }
     }
 
@@ -43,10 +45,9 @@ class DataService(@Autowired appConfig: AppConfig) {
         return records.map {
             val province = it["Province/State"]
             val country = it["Country/Region"]
-            val latestCount = it.get(it.size() - 1)
-            Data(province, country, latestCount.toInt())
-        }.sortedByDescending {
-            it.currentCount
+            val currentCount = it.get(it.size() - 1).toInt()
+            val previousCount = it.get(it.size() - 2).toInt()
+            Data(province, country, currentCount, previousCount)
         }
     }
 }

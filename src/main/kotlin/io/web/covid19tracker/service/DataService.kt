@@ -5,7 +5,6 @@ import io.web.covid19tracker.models.Data
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVRecord
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
@@ -21,27 +20,17 @@ class DataService(@Autowired appConfig: AppConfig) {
 
     @PostConstruct
     @Scheduled(cron = "* * * * * *")
-    fun fetchData(): Mono<String> {
-        val webClient = WebClient
-                .builder()
-                .baseUrl(dataUrl)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE)
-                .build()
-
-        val responseEntity = webClient
+    fun fetchData(): Mono<List<Data>> {
+        val webClient = WebClient.create(dataUrl)
+        val clientResponseMono = webClient
                 .get()
                 .exchange()
-                .block()
-                ?.toEntity(String::class.java)
-                ?.block()
 
-        val parsedDataList = parseCSV(responseEntity)
-
-        val bodyToMono = webClient
-                .get()
-                .retrieve()
-                .bodyToMono(String::class.java)
-        return bodyToMono
+        return clientResponseMono.flatMap {
+            it.toEntity(String::class.java)
+        }.map {
+            parseCSV(it)
+        }
     }
 
     private fun parseCSV(responseEntity: ResponseEntity<String>?): List<Data> {
@@ -55,7 +44,9 @@ class DataService(@Autowired appConfig: AppConfig) {
             val province = it["Province/State"]
             val country = it["Country/Region"]
             val latestCount = it.get(it.size() - 1)
-            Data(province, country, latestCount)
+            Data(province, country, latestCount.toInt())
+        }.sortedByDescending {
+            it.currentCount
         }
     }
 }

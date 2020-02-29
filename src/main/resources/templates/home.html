@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>COVID-19 Tracker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<div class="container">
+    <body>
+    <h1>COVID-19 Tracker</h1>
+    <div class="jumbotron">
+        <p class="lead">Total Number of Reported Cases as of Today.</p>
+        <h1 class="display-4" th:text="${totalCases}"></h1>
+    </div>
+
+    <div>
+        <table class="table">
+            <tr>
+                <th>COUNTRY</th>
+                <th>PROVINCE/STATE</th>
+                <th>CURRENT NUMBER OF CASES</th>
+            </tr>
+            <tr th:each="prod : ${data}">
+                <td th:text="${prod.country}">NA</td>
+                <td th:text="${prod.province}">NA</td>
+                <td th:text="${prod.currentCount}">NA</td>
+            </tr>
+        </table>
+    </div>
+
+    </body>
+
+
+</div>
+
+</html>

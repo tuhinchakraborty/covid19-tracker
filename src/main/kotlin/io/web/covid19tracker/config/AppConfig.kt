@@ -5,4 +5,4 @@ import org.springframework.context.annotation.Configuration
 
 @ConfigurationProperties(prefix = "covid19")
 @Configuration
-data class AppConfig(var dataUrl: String = "")
+data class AppConfig(var baseUrl: String = "", var dataUri: String = "")

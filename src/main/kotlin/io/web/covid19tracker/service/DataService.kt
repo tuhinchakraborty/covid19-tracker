@@ -5,7 +5,6 @@ import io.web.covid19tracker.models.Data
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVRecord
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.ResponseEntity
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
@@ -16,27 +15,28 @@ import javax.annotation.PostConstruct
 
 @Service
 class DataService(@Autowired appConfig: AppConfig) {
-    val dataUrl = appConfig.dataUrl
+    val baseUrl = appConfig.baseUrl
+    val dataUri = appConfig.dataUri
+    val webClient = WebClient.builder().baseUrl(baseUrl).build()
 
     @PostConstruct
     @Scheduled(cron = "* * * * * *")
     fun fetchData(): Mono<List<Data>> {
-        val clientResponseMono = WebClient
-                .create(dataUrl)
+        val responseString = webClient
                 .get()
-                .exchange()
+                .uri(dataUri)
+                .retrieve()
+                .bodyToMono(String::class.java)
 
-        return clientResponseMono.flatMap {
-            it.toEntity(String::class.java)
-        }.map { responseEntity ->
-            parseCSV(responseEntity).sortedByDescending {
+        return responseString.map { response ->
+            parseCSV(response).sortedByDescending {
                 it.currentCount
             }
         }
     }
 
-    private fun parseCSV(responseEntity: ResponseEntity<String>?): List<Data> {
-        val reader: Reader = StringReader(responseEntity?.body)
+    private fun parseCSV(responseEntity: String): List<Data> {
+        val reader: Reader = StringReader(responseEntity)
         val records: Iterable<CSVRecord> = CSVFormat
                 .DEFAULT
                 .withFirstRecordAsHeader()

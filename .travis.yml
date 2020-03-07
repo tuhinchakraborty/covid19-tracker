@@ -18,7 +18,7 @@ script:
 deploy:
   - provider: heroku
     api_key:
-      secure: "$HEROKU_API_KEY"
+      secure: $HEROKU_API_KEY
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

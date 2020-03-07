@@ -13,7 +13,7 @@ before_install:
 
 script:
   - ./gradlew clean build
-  - ./gradlew jibDockerBuild --image=covid19-tracker
+  - ./gradlew jibDockerBuild --image=tuhinchakraborty/covid19-tracker
 
 deploy:
   - provider: script

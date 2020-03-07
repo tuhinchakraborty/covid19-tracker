@@ -16,10 +16,9 @@ script:
   - ./gradlew jibDockerBuild --image=tuhinchakraborty/covid19-tracker
 
 deploy:
-  - provider: script
-    script: bash docker_push
-    on:
-      branch: master
+  - provider: heroku
+    api_key:
+      secure: "$HEROKU_API_KEY"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

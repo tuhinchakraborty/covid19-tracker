@@ -5,6 +5,12 @@ os: linux
 dist: trusty
 jdk: oraclejdk13
 
+services: docker
+
+before_install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password=stdin
+  - docker pull openjdk:13-jdk-alpine
+
 script:
   - ./gradlew clean build
 

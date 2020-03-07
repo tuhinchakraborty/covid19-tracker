@@ -17,7 +17,10 @@ script:
 
 deploy:
   - provider: heroku
-    api_key: $HEROKU_API_KEY
+    app:
+      master: tracker-covid19
+    api_key:
+      secure: eyeF+9LgZKLXRU8yygZBEEdji+cayK4abrMN9X/QJdL8fPC8Sjwd0fQkiGBNruE7df0WdFgT6XjQrjo7l4p7jXCxxXSnOKIsF7n1mjYNPbhtE6mS3GYaYNc+7iWoClQs8nNcvQrdy7DRHQQMbz328Lm6/hnCvCwZOvayJKfyBGBLMm/uUiiSMJmEafpyeDY//FfJPmcutKyUGphTtqQdtj1CI2B+Dsg3YGuZ6c6EC1wfV9HI2hYNdnNnyL2IF3Si3NNGg2pAoYTOWcvSHMZ2S9vi8qTlyEyI2rSb+HfL3y/hFutqnx2GapXNYyQ+CpnyTj4oETMTrYB/rTYwGk51YywLp9MZftgLpM50MsfYYCQvhjnC1xyd9bEMNFMJDVGeKA23VgCecL9hGVpP6CxnAImzU8EGVovm0lYl6BlTP8azsGPJglf8PZZY39W1VnRRdc8OPjUs8pFOH4gj0OrMZU4H0LNeLAsWhvCcwBmS59bjs5RC0p2F5oHevpn+lDzF7yiz0yQtCsrZueL0Grlp6gulFGwNP6AIlLc5UuFJ2PqOjPXJZr2NdmhUhJ4CNc19dTFIcmbSAJRigDTmRlMo5DPwjRM1n6I6UNhMIuaG63zVQMepnksyvuXft2pMG9N7Qhkk+GiPG5569YUAC6C0oTJDagJqJhBd9S40TI8hwC8=
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

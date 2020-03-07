@@ -13,6 +13,7 @@ before_install:
 
 script:
   - ./gradlew clean build
+  - ./gradlew jibDockerBuild --image=covid19-tracker
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

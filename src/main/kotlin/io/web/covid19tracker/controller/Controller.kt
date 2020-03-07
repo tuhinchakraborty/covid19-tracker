@@ -15,14 +15,18 @@ class Controller(
     fun home(model: Model): String {
         val fetchedData = dataService.fetchData()
         val totalCases = fetchedData.map { data ->
-            data.sumBy {
-                it.currentCount
+            data.filterNot {
+                it.currentCount == null
+            }.sumBy {
+                it.currentCount!!
             }
         }
 
         val previousCases = fetchedData.map { data ->
-            data.sumBy {
-                it.previousCount
+            data.filterNot {
+                it.previousCount == null
+            }.sumBy {
+                it.previousCount!!
             }
         }
 

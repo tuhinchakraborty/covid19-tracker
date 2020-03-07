@@ -45,8 +45,8 @@ class DataService(@Autowired appConfig: AppConfig) {
         return records.map {
             val province = it["Province/State"]
             val country = it["Country/Region"]
-            val currentCount = it.get(it.size() - 1).toInt()
-            val previousCount = it.get(it.size() - 2).toInt()
+            val currentCount = it.get(it.size() - 1).toIntOrNull()
+            val previousCount = it.get(it.size() - 2).toIntOrNull()
             Data(province, country, currentCount, previousCount)
         }
     }

@@ -52,3 +52,9 @@ tasks.withType<KotlinCompile> {
 		jvmTarget = "12"
 	}
 }
+
+jib {
+	from {
+		image 'adoptopenjdk/openjdk12:slim'
+	}
+}

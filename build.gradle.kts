@@ -53,8 +53,4 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-jib {
-	from {
-		image 'adoptopenjdk/openjdk12:slim'
-	}
-}
+jib.from.image = 'adoptopenjdk/openjdk12:slim'

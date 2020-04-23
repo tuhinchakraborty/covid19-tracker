@@ -10,7 +10,7 @@ plugins {
 
 group = "io.web"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = "12"
+java.sourceCompatibility = JavaVersion.VERSION_12
 
 val developmentOnly by configurations.creating
 configurations {

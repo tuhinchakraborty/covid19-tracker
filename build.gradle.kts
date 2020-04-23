@@ -10,7 +10,7 @@ plugins {
 
 group = "io.web"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_12
+java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 val developmentOnly by configurations.creating
 configurations {
@@ -49,8 +49,6 @@ tasks.withType<Test> {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "12"
+		jvmTarget = "1.8"
 	}
 }
-
-jib.from.image = 'adoptopenjdk/openjdk12:slim'

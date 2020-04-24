@@ -11,9 +11,17 @@ before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker pull openjdk:13-jdk-alpine
 
-script:
-  - ./gradlew clean build
-  - ./gradlew jibDockerBuild --image=tuhinchakraborty/covid19-tracker
+stages:
+  - build
+    if: branch = master and fork = false and type != pull_request
+
+jobs:
+  include:
+    - name: Build
+      stage: build
+      script:
+        - ./gradlew clean build
+        - ./gradlew jibDockerBuild --image=tuhinchakraborty/covid19-tracker
 
 deploy:
   - provider: heroku

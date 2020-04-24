@@ -7,13 +7,11 @@ jdk: oraclejdk13
 
 services: docker
 
-before_install:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker pull openjdk:13-jdk-alpine
-
 stages:
   - name: test
   - name: build
+    if: branch = master and fork = false and type != pull_request
+  - name: deploy
     if: branch = master and fork = false and type != pull_request
 
 jobs:
@@ -24,14 +22,17 @@ jobs:
     - name: Build
       stage: build
       script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull openjdk:13-jdk-alpine
         - ./gradlew clean build
         - ./gradlew jibDockerBuild --image=tuhinchakraborty/covid19-tracker
-
-deploy:
-  - provider: heroku
-    app:
-      master: tracker-covid19
-    api_key: $HEROKU_API_KEY
+    - name: Deploy
+      stage: deploy
+      deploy:
+        - provider: heroku
+          app:
+            master: tracker-covid19
+          api_key: $HEROKU_API_KEY
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

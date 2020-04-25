@@ -21,13 +21,10 @@ jobs:
       script: ./gradlew clean test
     - name: Build
       stage: build
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull openjdk:13-jdk-alpine
-        - ./gradlew clean build
-        - ./gradlew jibDockerBuild --image=tuhinchakraborty/covid19-tracker
+      script: ./gradlew clean build
     - name: Deploy
       stage: deploy
+      script: bash docker_push
       deploy:
         - provider: heroku
           app:

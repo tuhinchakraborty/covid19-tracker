@@ -1,4 +1,5 @@
 #!/bin/bash
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+docker pull openjdk:13-jdk-alpine
 ./gradlew jibDockerBuild --image=tuhinchakraborty/covid19-tracker
 docker push tuhinchakraborty/covid19-tracker:latest

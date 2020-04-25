@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar build/libs/covid19-tracker-0.0.1-SNAPSHOT.jar
+web: docker run -p $PORT:8080 tuhinchakraborty/covid19-tracker:latest

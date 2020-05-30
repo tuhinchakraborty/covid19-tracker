@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import reactor.core.publisher.Mono
 
+@Disabled
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(SpringExtension::class)
 internal class ControllerTest {
@@ -35,7 +36,6 @@ internal class ControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build()
     }
 
-    @Disabled
     @Test
     internal fun `should show data`() {
         val data = listOf(Data("province", "country", 200, 190))

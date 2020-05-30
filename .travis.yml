@@ -18,13 +18,15 @@ jobs:
   include:
     - name: Test
       stage: test
-      script: ./gradlew clean test
+      script:
+        - ./gradlew clean test
+        - ./gradlew jacocoTestReport
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
     - name: Build
       stage: build
       script:
-      - ./gradlew clean build
-      - ./gradlew jacocoTestReport
-      - bash <(curl -s https://codecov.io/bash)
+        - ./gradlew clean build
     - name: Deploy
       stage: deploy
       script: bash docker_push

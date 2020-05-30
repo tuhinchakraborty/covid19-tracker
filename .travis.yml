@@ -35,7 +35,7 @@ jobs:
           api_key: $HEROKU_API_KEY
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -k -s https://codecov.io/bash)
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

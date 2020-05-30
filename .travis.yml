@@ -21,7 +21,10 @@ jobs:
       script: ./gradlew clean test
     - name: Build
       stage: build
-      script: ./gradlew clean build
+      script:
+      - ./gradlew clean build
+      - ./gradlew jacocoTestReport
+      - bash <(curl -s https://codecov.io/bash)
     - name: Deploy
       stage: deploy
       script: bash docker_push

@@ -21,8 +21,6 @@ jobs:
       script:
         - ./gradlew clean test
         - ./gradlew jacocoTestReport
-      after_success:
-        - bash <(curl -s https://codecov.io/bash)
     - name: Build
       stage: build
       script:
@@ -35,6 +33,9 @@ jobs:
           app:
             master: tracker-covid19
           api_key: $HEROKU_API_KEY
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

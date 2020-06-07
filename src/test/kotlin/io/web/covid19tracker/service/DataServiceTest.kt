@@ -32,6 +32,7 @@ internal class DataServiceTest {
         mockWebServer.start()
         val url = mockWebServer.url("/")
         appConfig = AppConfig(url.toString(), "/data")
+        apiAppConfig = ApiAppConfig(url.toString(), "/api")
         dataService = DataService(appConfig, apiAppConfig)
         MockKAnnotations.init(this)
     }

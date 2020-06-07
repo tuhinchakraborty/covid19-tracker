@@ -31,13 +31,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.squareup.okhttp3:okhttp:4.7.2")
-//	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	testImplementation("com.squareup.okhttp3:mockwebserver:4.7.2")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("io.mockk:mockk:1.9.3")
-	testImplementation("com.squareup.okhttp3:mockwebserver:3.11.0")
 	testImplementation("com.github.tomakehurst:wiremock-jre8:2.25.1")
 }
 

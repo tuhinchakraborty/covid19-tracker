@@ -3,6 +3,7 @@ package io.web.covid19tracker.service
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
+import io.web.covid19tracker.config.ApiAppConfig
 import io.web.covid19tracker.config.AppConfig
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -17,6 +18,9 @@ internal class DataServiceTest {
     @MockK
     private lateinit var appConfig: AppConfig
 
+    @MockK
+    private lateinit var apiAppConfig: ApiAppConfig
+
     @InjectMockKs
     private lateinit var dataService: DataService
 
@@ -28,7 +32,7 @@ internal class DataServiceTest {
         mockWebServer.start()
         val url = mockWebServer.url("/")
         appConfig = AppConfig(url.toString(), "/data")
-        dataService = DataService(appConfig)
+        dataService = DataService(appConfig, apiAppConfig)
         MockKAnnotations.init(this)
     }
 

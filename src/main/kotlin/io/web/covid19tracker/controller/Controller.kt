@@ -11,7 +11,7 @@ class Controller(
         @Autowired val dataService: DataService
 ) {
 
-    @GetMapping("/")
+    @GetMapping("/data")
     fun home(model: Model): String {
         val fetchedData = dataService.fetchData()
         val totalCases = fetchedData.map { data ->

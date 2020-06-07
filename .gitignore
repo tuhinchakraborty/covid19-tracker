@@ -30,3 +30,9 @@ out/
 
 ### VS Code ###
 .vscode/
+node_modules/@babel/plugin-transform-exponentiation-operator/
+node_modules/@babel/plugin-transform-for-of/
+config/
+node_modules/
+target/
+webpack.generated.js

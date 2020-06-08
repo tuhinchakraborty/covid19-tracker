@@ -8,6 +8,8 @@ import io.web.covid19tracker.config.AppConfig
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import reactor.core.publisher.Flux
@@ -67,5 +69,33 @@ internal class DataServiceTest {
                             && it.previousCount == 130
                 }
                 .verifyComplete()
+    }
+
+    @Test
+    fun shouldGetCountryNames() {
+        mockWebServer.enqueue(MockResponse()
+                .setResponseCode(200)
+                .setBody(countryResponse().trimIndent()))
+
+        val countryNames = dataService.getCountryNames()
+
+        assertEquals(2, countryNames.size)
+        assertEquals("Country name", countryNames[0])
+        assertEquals("Country name 2", countryNames[1])
+    }
+
+    private fun countryResponse(): String {
+        return """[
+                        {
+                            "Country": "Country name",
+                            "Slug" : "Country Slug",
+                            "ISO2" : "Country ISO2"
+                        },
+                        {
+                            "Country": "Country name 2",
+                            "Slug" : "Country Slug 2",
+                            "ISO2" : "Country ISO2 2"
+                        }
+                    ]"""
     }
 }

@@ -50,11 +50,27 @@ dependencyManagement {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	finalizedBy("jacocoTestCoverageVerification")
 }
 
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "1.8"
+	}
+}
+
+tasks.jacocoTestCoverageVerification {
+	classDirectories.setFrom(
+			sourceSets.main.get().output.asFileTree.matching {
+				exclude("io/web/covid19tracker/Covid19TrackerApplicationKt.class")
+			}
+	)
+	violationRules {
+		rule {
+			limit {
+				minimum = "0.74".toBigDecimal()
+			}
+		}
 	}
 }

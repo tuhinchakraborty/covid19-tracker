@@ -11,7 +11,6 @@ plugins {
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
 	mavenCentral()
@@ -30,9 +29,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("com.squareup.okhttp3:okhttp:4.7.2")
-	testImplementation("com.squareup.okhttp3:mockwebserver:4.7.2")
+	implementation("com.squareup.okhttp3:okhttp:4.0.0")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+	testImplementation("com.squareup.okhttp3:mockwebserver:4.0.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}

@@ -27,6 +27,8 @@ class MainView(@Autowired val dataService: DataService) : VerticalLayout() {
         comboBox.addValueChangeListener {
             val (country, slug, iso2) = dataService.getCountry(countries, it.value)
                     ?: Country("", "", "")
+            Notification.show("Country Selected is $country")
+            Notification.show("Country Slug is $slug")
         }
 
         val submit = Button("Submit")

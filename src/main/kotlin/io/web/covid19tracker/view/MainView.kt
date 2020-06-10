@@ -8,6 +8,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
+import io.web.covid19tracker.models.Country
 import io.web.covid19tracker.service.DataService
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -15,13 +16,20 @@ import org.springframework.beans.factory.annotation.Autowired
 @Route
 class MainView(@Autowired val dataService: DataService) : VerticalLayout() {
     init {
-        val countryNames = dataService.getCountryNames()
+        val countries = dataService.getCountries()
+        val countryNames = countries?.map {
+            it.country
+        }
+
         val comboBox = ComboBox<String>()
         comboBox.setItems(countryNames)
-
-        val submit = Button("Submit") {
-            Notification.show("Clicked and the country is ${comboBox.value}")
+        comboBox.placeholder = "Country"
+        comboBox.addValueChangeListener {
+            val (country, slug, iso2) = dataService.getCountry(countries, it.value)
+                    ?: Country("", "", "")
         }
+
+        val submit = Button("Submit")
 
         val verticalLayout = VerticalLayout()
         verticalLayout.add(comboBox)

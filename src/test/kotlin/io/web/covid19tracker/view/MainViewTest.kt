@@ -7,6 +7,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.mockk
+import io.web.covid19tracker.models.Country
 import io.web.covid19tracker.service.DataService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -21,7 +22,7 @@ internal class MainViewTest {
 
     @BeforeEach
     internal fun setUp() {
-        every { dataService.getCountryNames() } returns listOf("Country One", "Country Two")
+        every { dataService.getCountries() } returns getListOfCountries()
         mainView = MainView(dataService)
     }
 
@@ -48,4 +49,7 @@ internal class MainViewTest {
         assertTrue(components[0].isVisible)
         assertTrue(components[1].isVisible)
     }
+
+    private fun getListOfCountries() : List<Country> = listOf(Country("Country One", "country-one", "co"),
+            Country("Country Two", "country-two", "ct"))
 }

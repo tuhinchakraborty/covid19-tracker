@@ -1,15 +1,17 @@
 package io.web.covid19tracker.service
 
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.web.covid19tracker.config.ApiAppConfig
 import io.web.covid19tracker.config.AppConfig
+import io.web.covid19tracker.models.Country
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import reactor.core.publisher.Flux
@@ -77,11 +79,22 @@ internal class DataServiceTest {
                 .setResponseCode(200)
                 .setBody(countryResponse().trimIndent()))
 
-        val countryNames = dataService.getCountryNames()
+        val countries = dataService.getCountries()
+        val countryResponseList = jacksonObjectMapper()
+                .readValue(countryResponse(), object : TypeReference<List<Country>>() {})
 
-        assertEquals(2, countryNames.size)
-        assertEquals("Country name", countryNames[0])
-        assertEquals("Country name 2", countryNames[1])
+        assertEquals(2, countries?.size)
+        assertEquals(countryResponseList[0], countries?.get(0))
+        assertEquals(countryResponseList[1], countries?.get(1))
+    }
+
+    @Test
+    fun shouldReturnCountryByCountryName() {
+        val countryList = jacksonObjectMapper()
+                .readValue(countryResponse(), object : TypeReference<List<Country>>() {})
+        val country = dataService.getCountry(countryList, countryList[0].country)
+
+        assertEquals(countryList[0], country)
     }
 
     private fun countryResponse(): String {

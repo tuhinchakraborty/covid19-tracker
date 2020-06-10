@@ -67,12 +67,9 @@ class DataService(
         }
     }
 
-    fun getCountryNames(): List<String> {
-        val json = fetchCountries()?.string()
-        val readValue = jacksonObjectMapper.readValue(json, object : TypeReference<List<Country>>() {})
-        return readValue.map {
-            it.country
-        }
+    fun getCountries(): List<Country>? {
+        val countryJson = fetchCountries()?.string()
+        return jacksonObjectMapper.readValue(countryJson, object : TypeReference<List<Country>>() {})
     }
 
     private fun fetchCountries(): ResponseBody? {
@@ -84,5 +81,14 @@ class DataService(
         val httpClient = client.newBuilder().build()
         val response = httpClient.newCall(request).execute()
         return response.body
+    }
+
+    fun getCountry(
+            countries: List<Country>?,
+            countryName: String?
+    ): Country? {
+        return countries?.first {
+            it.country == countryName
+        }
     }
 }

@@ -8,22 +8,22 @@ import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.mockk
 import io.web.covid19tracker.models.Country
-import io.web.covid19tracker.service.DataService
+import io.web.covid19tracker.service.CountryService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class MainViewTest {
-    private val dataService: DataService = mockk()
+    private val countryService: CountryService = mockk()
 
     @InjectMockKs
     private lateinit var mainView: MainView
 
     @BeforeEach
     internal fun setUp() {
-        every { dataService.getCountries() } returns getListOfCountries()
-        mainView = MainView(dataService)
+        every { countryService.getCountries() } returns getListOfCountries()
+        mainView = MainView(countryService)
     }
 
     @Test

@@ -5,3 +5,4 @@ covid19:
 covid19api:
   base-url: https://api.covid19api.com
   countries: /countries
+  total-all-status: /total/country

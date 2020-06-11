@@ -30,6 +30,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.squareup.okhttp3:okhttp:4.0.0")
+	implementation("org.webjars.npm:apexcharts:3.19.2")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 

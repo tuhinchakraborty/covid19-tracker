@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.web.covid19tracker.config.ApiAppConfig
 import io.web.covid19tracker.models.Country
+import io.web.covid19tracker.models.CountryData
 import io.web.covid19tracker.util.getResponseFor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -13,10 +14,11 @@ class CountryService(@Autowired apiAppConfig: ApiAppConfig) {
 
     private val apiBaseUrl = apiAppConfig.baseUrl
     private val countriesUri = apiAppConfig.countries
+    private val totalAllStatus = apiAppConfig.totalAllStatus
 
     private val jacksonObjectMapper = jacksonObjectMapper()
 
-    fun getCountries(): List<Country>? {
+    fun getCountries() : List<Country>? {
         val countryJson = getResponseFor(apiBaseUrl + countriesUri)?.string()
         return jacksonObjectMapper.readValue(countryJson, object : TypeReference<List<Country>>() {})
     }
@@ -28,5 +30,10 @@ class CountryService(@Autowired apiAppConfig: ApiAppConfig) {
         return countries?.first {
             it.country == countryName
         }
+    }
+
+    fun getTotalCountryData(countrySlug: String) : List<CountryData> {
+        val totalCountryData = getResponseFor(apiBaseUrl + totalAllStatus + countrySlug)?.string()
+        return jacksonObjectMapper.readValue(totalCountryData, object : TypeReference<List<CountryData>>() {})
     }
 }

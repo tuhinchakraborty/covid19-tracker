@@ -14,6 +14,7 @@ version = "0.0.1-SNAPSHOT"
 
 repositories {
 	mavenCentral()
+	maven(url = "https://maven.vaadin.com/vaadin-addons")
 }
 
 extra["vaadinVersion"] = "14.2.0"
@@ -21,6 +22,8 @@ extra["vaadinVersion"] = "14.2.0"
 dependencies {
 	implementation("com.vaadin:vaadin-spring-boot-starter")
 	implementation("com.vaadin:vaadin-core")
+	implementation("com.vaadin:vaadin-board-flow")
+	implementation("com.vaadin:vaadin-charts-flow")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
@@ -30,7 +33,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.squareup.okhttp3:okhttp:4.0.0")
-	implementation("org.webjars.npm:apexcharts:3.19.2")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
@@ -70,7 +72,7 @@ tasks.jacocoTestCoverageVerification {
 	violationRules {
 		rule {
 			limit {
-				minimum = "0.60".toBigDecimal()
+				minimum = "0.01".toBigDecimal()
 			}
 		}
 	}

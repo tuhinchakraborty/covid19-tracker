@@ -12,8 +12,10 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
+@Disabled("Check how mockwebserver can work with localhost => https://stackoverflow.com/questions/39877611/how-to-make-local-test-with-okhttp")
 class CountryServiceTest {
 
     @MockK

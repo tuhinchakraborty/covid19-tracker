@@ -75,10 +75,10 @@ class MainView(@Autowired val countryService: CountryService) : VerticalLayout()
         plotOptionsArea.stacking = Stacking.NORMAL
         configuration.setPlotOptions(plotOptionsArea)
 
-        configuration.addSeries(ListSeries("Confirmed", *getConfirmedCases(totalCountryData).toTypedArray()))
-        configuration.addSeries(ListSeries("Active", *getActiveCases(totalCountryData).toTypedArray()))
-        configuration.addSeries(ListSeries("Recovered", *getRecoveredCases(totalCountryData).toTypedArray()))
-        configuration.addSeries(ListSeries("Deaths", *getDeaths(totalCountryData).toTypedArray()))
+        configuration.addSeries(ListSeries("Confirmed", getConfirmedCases(totalCountryData)))
+        configuration.addSeries(ListSeries("Active", getActiveCases(totalCountryData)))
+        configuration.addSeries(ListSeries("Recovered", getRecoveredCases(totalCountryData)))
+        configuration.addSeries(ListSeries("Deaths", getDeaths(totalCountryData)))
 
         return chart
     }

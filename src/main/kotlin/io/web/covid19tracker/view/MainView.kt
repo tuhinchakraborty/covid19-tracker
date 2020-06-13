@@ -50,21 +50,6 @@ class MainView(@Autowired val countryService: CountryService) : VerticalLayout()
         add(verticalLayout)
     }
 
-//    private fun createBoard() : Board {
-//        val board = Board()
-//        board.setSizeUndefined()
-//
-//        val child1: Div = Div()
-//        child1.text = "This could be chart 1"
-//        val child2: Div = Div()
-//        child2.text = "This could be chart 2"
-//
-//        board.addRow(createAreaChart(), child1)
-//
-//
-//        return board
-//    }
-
     private fun createAreaChart(totalCountryData: List<CountryData>) : Chart {
 
         val chart = Chart(ChartType.AREA)

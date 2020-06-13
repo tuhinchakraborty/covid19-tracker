@@ -3,6 +3,6 @@ covid19:
   data-uri: /CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv
 
 covid19api:
-  base-url: https://api.covid19api.com
-  countries: /countries
-  total-all-status: /total/country/
+  base-url: api.covid19api.com
+  countries: countries
+  total-all-status: total/country/

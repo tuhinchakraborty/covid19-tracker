@@ -6,8 +6,10 @@ import io.web.covid19tracker.config.ApiAppConfig
 import io.web.covid19tracker.models.Country
 import io.web.covid19tracker.models.CountryData
 import io.web.covid19tracker.util.getResponseFor
+import io.web.covid19tracker.util.getResponseForDates
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class CountryService(@Autowired apiAppConfig: ApiAppConfig) {
@@ -18,8 +20,8 @@ class CountryService(@Autowired apiAppConfig: ApiAppConfig) {
 
     private val jacksonObjectMapper = jacksonObjectMapper()
 
-    fun getCountries() : List<Country>? {
-        val countryJson = getResponseFor(apiBaseUrl + countriesUri)?.string()
+    fun getCountries(): List<Country>? {
+        val countryJson = getResponseFor(apiBaseUrl, countriesUri)?.string()
         return jacksonObjectMapper.readValue(countryJson, object : TypeReference<List<Country>>() {})
     }
 
@@ -32,8 +34,20 @@ class CountryService(@Autowired apiAppConfig: ApiAppConfig) {
         }
     }
 
-    fun getTotalCountryData(countrySlug: String) : List<CountryData> {
-        val totalCountryData = getResponseFor(apiBaseUrl + totalAllStatus + countrySlug)?.string()
+    fun getTotalCountryData(countrySlug: String): List<CountryData> {
+        val totalCountryData = getResponseFor(apiBaseUrl, totalAllStatus + countrySlug)?.string()
         return jacksonObjectMapper.readValue(totalCountryData, object : TypeReference<List<CountryData>>() {})
+    }
+
+    fun getCurrentCountryData(countrySlug: String): CountryData {
+        val currentDate = LocalDate.now()
+        val previousDate = currentDate.minusDays(1)
+        val countryData = getResponseForDates(
+                apiBaseUrl,
+                totalAllStatus + countrySlug,
+                previousDate.toString(),
+                currentDate.toString()
+        )?.string()
+        return jacksonObjectMapper.readValue(countryData, object : TypeReference<List<CountryData>>() {}).first()
     }
 }

@@ -35,9 +35,9 @@ internal class MainViewTest {
     }
 
     @Test
-    fun shouldHaveComboBoxAndButtonWithinVerticalLayout() {
+    fun shouldHaveComboBoxWithinVerticalLayout() {
         val verticalLayout = mainView.getComponentAt(0)
-        assertEquals(2, verticalLayout.children.count())
+        assertEquals(1, verticalLayout.children.count())
 
         val components = mutableListOf<Component>()
         verticalLayout.children.forEachOrdered {
@@ -45,9 +45,7 @@ internal class MainViewTest {
         }
 
         assertEquals(ComboBox::class, components[0]::class)
-        assertEquals(Button::class, components[1]::class)
         assertTrue(components[0].isVisible)
-        assertTrue(components[1].isVisible)
     }
 
     private fun getListOfCountries() : List<Country> = listOf(Country("Country One", "country-one", "co"),

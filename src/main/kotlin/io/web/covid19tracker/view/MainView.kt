@@ -1,6 +1,5 @@
 package io.web.covid19tracker.view
 
-import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.charts.Chart
 import com.vaadin.flow.component.charts.model.*
 import com.vaadin.flow.component.combobox.ComboBox
@@ -47,11 +46,8 @@ class MainView(@Autowired val countryService: CountryService) : VerticalLayout()
             add(horizontalLayout)
         }
 
-        val submit = Button("Submit")
-
         val verticalLayout = VerticalLayout()
         verticalLayout.add(comboBox)
-        verticalLayout.add(submit)
 
         verticalLayout.alignItems = FlexComponent.Alignment.CENTER
 
@@ -119,7 +115,7 @@ class MainView(@Autowired val countryService: CountryService) : VerticalLayout()
         series.add(DataSeriesItem("Recovered", currentCountryData.recovered))
         series.add(DataSeriesItem("Deaths", currentCountryData.deaths))
         configuration.setSeries(series)
-        chart.setVisibilityTogglingDisabled(true)
+        chart.setVisibilityTogglingDisabled(false)
 
         return chart
     }

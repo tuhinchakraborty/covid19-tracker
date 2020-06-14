@@ -2,6 +2,7 @@ package io.web.covid19tracker.service
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.web.covid19tracker.config.ApiAppConfig
 import io.web.covid19tracker.models.Country
 import io.web.covid19tracker.models.CountryData
@@ -22,7 +23,7 @@ class CountryService(@Autowired apiAppConfig: ApiAppConfig) {
 
     fun getCountries(): List<Country>? {
         val countryJson = getResponseFor(apiBaseUrl, countriesUri)?.string()
-        return jacksonObjectMapper.readValue(countryJson, object : TypeReference<List<Country>>() {})
+        return countryJson?.let { jacksonObjectMapper.readValue<List<Country>>(it) }
     }
 
     fun getCountry(

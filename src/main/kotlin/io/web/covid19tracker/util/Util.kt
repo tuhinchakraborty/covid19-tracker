@@ -11,7 +11,7 @@ fun getResponseFor(url: String, path: String): ResponseBody? {
     val httpUrl = HttpUrl.Builder()
             .scheme("https")
             .host(url)
-            .addPathSegment(path)
+            .addPathSegments(path)
             .build()
 
     val request = Request
@@ -33,7 +33,7 @@ fun getResponseForDates(
     val httpUrl = HttpUrl.Builder()
             .scheme("https")
             .host(url)
-            .addPathSegment(path)
+            .addPathSegments(path)
             .addQueryParameter("from", from)
             .addQueryParameter("to", to)
             .build()

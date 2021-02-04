@@ -33,6 +33,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.squareup.okhttp3:okhttp:4.0.0")
+	implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.1")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 

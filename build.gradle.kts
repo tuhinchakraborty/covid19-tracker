@@ -20,7 +20,9 @@ repositories {
 extra["vaadinVersion"] = "14.2.0"
 
 dependencies {
-	implementation("com.vaadin:vaadin-spring-boot-starter")
+	implementation("com.vaadin:vaadin-spring-boot-starter") {
+		exclude("org.hibernate.validator", "hibernate-validator")
+	}
 	implementation("com.vaadin:vaadin-core")
 	implementation("com.vaadin:vaadin-board-flow")
 	implementation("com.vaadin:vaadin-charts-flow")
@@ -30,7 +32,9 @@ dependencies {
 	implementation("org.apache.commons:commons-lang3:3.9")
 	implementation("org.apache.commons:commons-csv:1.8")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.springframework.boot:spring-boot-starter-webflux") {
+		exclude("org.hibernate.validator", "hibernate-validator")
+	}
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.squareup.okhttp3:okhttp:4.0.0")
 	implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.1")
